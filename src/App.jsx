@@ -1,13 +1,14 @@
 import Header from './components/Header';
 import Home from './pages/Home';
 import ShowDetail from './pages/ShowDetail';
+import SearchResults from './pages/SearchResults';
 
-function App() {
+const App = () => {
   return (
     <div className='App'>
-      <ShowDetail />
+      <SearchResults />
     </div>
   );
-}
+};
 
 export default App;

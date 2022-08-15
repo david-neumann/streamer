@@ -1,4 +1,4 @@
-function ShowCardSmall() {
+const ShowCardSmall = () => {
   return (
     <img
       src='https://static.tvmaze.com/uploads/images/original_untouched/332/830232.jpg'
@@ -6,6 +6,6 @@ function ShowCardSmall() {
       className='h-[190px] aspect-poster object-cover rounded-xl shadow-even mr-4'
     />
   );
-}
+};
 
 export default ShowCardSmall;

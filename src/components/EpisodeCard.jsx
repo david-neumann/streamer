@@ -1,4 +1,4 @@
-function EpisodeCard() {
+const EpisodeCard = () => {
   return (
     <div className='w-full my-4 border-purple-800 rounded-xl shadow-episode'>
       <div className='flex justify-between h-24 border-b border-slate-100 border-opacity-100'>
@@ -24,6 +24,6 @@ function EpisodeCard() {
       </p>
     </div>
   );
-}
+};
 
 export default EpisodeCard;

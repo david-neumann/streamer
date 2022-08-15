@@ -1,6 +1,6 @@
 import EpisodeCard from '../components/EpisodeCard';
 
-function ShowDetail() {
+const ShowDetail = () => {
   return (
     <>
       <header>
@@ -50,6 +50,6 @@ function ShowDetail() {
       </section>
     </>
   );
-}
+};
 
 export default ShowDetail;
