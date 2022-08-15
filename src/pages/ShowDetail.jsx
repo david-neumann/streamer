@@ -1,6 +1,22 @@
+import { useContext } from 'react';
+import { SavedShowsContext } from '../savedShowsContext';
 import EpisodeCard from '../components/EpisodeCard';
 
 const ShowDetail = () => {
+  const { savedShows } = useContext(SavedShowsContext);
+  const { name, summary, premiered, network } = savedShows;
+
+  let htmlFreeSummary;
+  if (summary) {
+    htmlFreeSummary = summary.replace(/(<([^>]+)>)/gi, '');
+  }
+
+  const renderedEpisodes = savedShows.episodes.map(episode => (
+    <EpisodeCard {...episode} />
+  ));
+
+  console.log(savedShows);
+
   return (
     <>
       <header>
@@ -14,13 +30,16 @@ const ShowDetail = () => {
         <div className='ml-6'>
           <div className='flex justify-between items-center mr-6'>
             <div>
-              <h1 className='text-slate-800 text-4xl font-bold'>Ted Lasso</h1>
-              <p className='text-purple-800 font-light'>2020 • Apple TV+</p>
+              <h1 className='text-slate-800 text-4xl font-bold'>{name}</h1>
+              <p className='text-purple-800 font-light'>
+                {premiered.slice(0, 4)} •{' '}
+                {network ? savedShows.network.name : savedShows.webChannel.name}
+              </p>
             </div>
             <img
               src='/plus.svg'
               alt='add button'
-              className='w-10 p-2 mr-8 border-2 border-purple-800 rounded-full hover:bg-purple-300'
+              className='w-10 p-2 mr-4 border-2 border-purple-800 rounded-full hover:bg-purple-300'
             />
           </div>
           <div className='flex flex-nowrap overflow-x-scroll mt-2'>
@@ -38,15 +57,11 @@ const ShowDetail = () => {
             </button>
           </div>
         </div>
-        <p className='mx-6 my-4 text-slate-800 font-light'>
-          Ted Lasso centers on an idealistic — and clueless — all-American
-          football coach hired to manage an English football club — despite
-          having no soccer coaching experience at all.
-        </p>
+        <p className='mx-6 my-4 text-slate-800 font-light'>{htmlFreeSummary}</p>
       </header>
       <section className='mx-6'>
         <h2 className='text-slate-800 font-bold text-2xl mt-6'>Next Episode</h2>
-        <EpisodeCard />
+        {renderedEpisodes}
       </section>
     </>
   );

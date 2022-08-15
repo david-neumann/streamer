@@ -32,9 +32,9 @@ const SearchBar = ({ onSearchSubmit, clearResults }) => {
         value={debouncedTerm}
       />
       <img
-        src='/search-light.svg'
+        src='/search.svg'
         alt='search icon'
-        className='h-[41px] absolute right-0 top-0 py-2 px-4 bg-purple-800 rounded-r-lg'
+        className='h-[40px] absolute right-0 top-[1px] py-2 px-4'
       />
     </header>
   );
