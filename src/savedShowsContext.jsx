@@ -4,6 +4,19 @@ import { getShowDetails, getEpisodeDetails, getShowImages } from './tvmazeAPI';
 const SavedShowsContext = createContext();
 
 const SavedShowsContextProvider = props => {
+  // State used to pass id from home page to show details when a show is clicked
+  const getInitialId = () => {
+    const savedId = localStorage.getItem('savedId');
+    return savedId ? JSON.parse(savedId) : '';
+  };
+
+  const [currentId, setCurrentId] = useState(getInitialId);
+
+  useEffect(() => {
+    localStorage.setItem('savedId', JSON.stringify(currentId));
+  }, [currentId]);
+
+  // State for saved shows, storing and retrieving from localStorage
   const getInitialState = () => {
     const savedData = localStorage.getItem('savedData');
     return savedData ? JSON.parse(savedData) : [];
@@ -15,6 +28,7 @@ const SavedShowsContextProvider = props => {
     localStorage.setItem('savedData', JSON.stringify(savedShows));
   }, [savedShows]);
 
+  // Save a new show from search results or show details
   const saveNewShow = async id => {
     const showPromise = getShowDetails(id);
     const episodePromise = getEpisodeDetails(id);
@@ -26,8 +40,6 @@ const SavedShowsContextProvider = props => {
       imagesPromise,
     ]);
 
-    console.log(episodeDetails);
-
     const newEpisodesArray = episodeDetails.map(episode => ({
       ...episode,
       watched: false,
@@ -36,14 +48,17 @@ const SavedShowsContextProvider = props => {
     const newShowObj = {
       ...showDetails,
       episodes: newEpisodesArray,
-      images: { ...images },
+      images,
+      tags: ['want to watch'],
     };
 
-    setSavedShows(newShowObj);
+    setSavedShows(prevSavedShows => [...prevSavedShows, newShowObj]);
   };
 
   return (
-    <SavedShowsContext.Provider value={{ savedShows, saveNewShow }}>
+    <SavedShowsContext.Provider
+      value={{ currentId, setCurrentId, savedShows, saveNewShow }}
+    >
       {props.children}
     </SavedShowsContext.Provider>
   );

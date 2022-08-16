@@ -1,17 +1,12 @@
-import { useState } from 'react';
+import { useContext } from 'react';
 import SearchBar from '../components/SearchBar';
 import SearchCard from '../components/SearchCard';
-import { getSearchResults } from '../tvmazeAPI';
+import { SearchContext } from '../searchContext';
+import { Link } from 'react-router-dom';
 
 const SearchResults = () => {
-  const [searchResults, setSearchResults] = useState([]);
-
-  const onSearchSubmit = async searchTerm => {
-    const resultsArray = await getSearchResults(searchTerm);
-    setSearchResults(resultsArray.data);
-  };
-
-  const clearResults = () => setSearchResults([]);
+  const { searchResults, onSearchSubmit, clearResults } =
+    useContext(SearchContext);
 
   const searchResultsElements = searchResults.map(result => (
     <SearchCard key={result.show.id} id={result.show.id} result={result} />
@@ -20,7 +15,18 @@ const SearchResults = () => {
   return (
     <>
       <SearchBar onSearchSubmit={onSearchSubmit} clearResults={clearResults} />
-      <main className='m-6'>{searchResultsElements}</main>
+      {searchResultsElements.length > 0 ? (
+        <main className='m-6'>{searchResultsElements}</main>
+      ) : (
+        <Link to='/'>
+          <div className='h-screen w-7/8 px-8'>
+            <h2 className='text-slate-800 italic'>
+              Don't want to search? Click anywhere below the search bar to go
+              Home.
+            </h2>
+          </div>
+        </Link>
+      )}
     </>
   );
 };

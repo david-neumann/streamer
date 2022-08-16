@@ -1,29 +1,44 @@
 import { useContext } from 'react';
 import { SavedShowsContext } from '../savedShowsContext';
 import EpisodeCard from '../components/EpisodeCard';
+import { Link } from 'react-router-dom';
 
 const ShowDetail = () => {
-  const { savedShows } = useContext(SavedShowsContext);
-  const { name, summary, premiered, network } = savedShows;
+  const { currentId, savedShows } = useContext(SavedShowsContext);
 
-  let htmlFreeSummary;
-  if (summary) {
-    htmlFreeSummary = summary.replace(/(<([^>]+)>)/gi, '');
-  }
+  const currentShowData = savedShows.filter(show => currentId === show.id);
+  const { episodes, name, images, network, premiered, summary, webChannel } =
+    currentShowData[0];
 
-  const renderedEpisodes = savedShows.episodes.map(episode => (
-    <EpisodeCard {...episode} />
-  ));
+  const backgroundImg = images.find(image => image.type === 'background');
+  const { url } = backgroundImg.resolutions.original;
+  const year = premiered ? premiered.slice(0, 4) : '';
+  const service = network ? network.name : webChannel.name;
+  const htmlFreeSummary = summary ? summary.replace(/(<([^>]+)>)/gi, '') : '';
 
-  console.log(savedShows);
+  console.log(currentShowData);
+  console.log(backgroundImg);
+
+  const renderedEpisodes = episodes ? (
+    episodes.map(episode => <EpisodeCard key={episode.id} {...episode} />)
+  ) : (
+    <div></div>
+  );
 
   return (
     <>
-      <header>
+      <header className='relative'>
+        <Link to='/'>
+          <img
+            src='/caret-left.svg'
+            alt='back arrow'
+            className='absolute top-0 left-0 h-20 py-4 pl-[4px] pr-8'
+          />
+        </Link>
         <div className='min-h-[240px] w-full aspect-video bg-gradient-to-b from-transparent via-transparent to-white'>
           <img
-            src='https://static.tvmaze.com/uploads/images/original_untouched/332/830233.jpg'
-            alt='Ted Lasso'
+            src={backgroundImg && url}
+            alt={name}
             className='aspect-video object-cover absolute -z-10'
           />
         </div>
@@ -32,8 +47,7 @@ const ShowDetail = () => {
             <div>
               <h1 className='text-slate-800 text-4xl font-bold'>{name}</h1>
               <p className='text-purple-800 font-light'>
-                {premiered.slice(0, 4)} •{' '}
-                {network ? savedShows.network.name : savedShows.webChannel.name}
+                {year} • {service}
               </p>
             </div>
             <img
@@ -61,7 +75,7 @@ const ShowDetail = () => {
       </header>
       <section className='mx-6'>
         <h2 className='text-slate-800 font-bold text-2xl mt-6'>Next Episode</h2>
-        {renderedEpisodes}
+        {episodes && renderedEpisodes}
       </section>
     </>
   );
