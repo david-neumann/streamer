@@ -13,6 +13,9 @@ const Home = () => {
   const renderedWatchingNow = savedShows.map(show => (
     <ShowCardLarge key={show.id} id={show.id} {...show} />
   ));
+  const renderedWantToWatch = savedShows.map(show => (
+    <ShowCardSmall key={show.id} id={show.id} {...show} />
+  ));
 
   console.log(savedShows);
 
@@ -40,8 +43,8 @@ const Home = () => {
             <h1 className='text-slate-800 text-2xl font-bold'>Want to watch</h1>
             <p className='text-purple-900 font-light'>See All</p>
           </div>
-          <div className='ml-6'>
-            <ShowCardSmall />
+          <div className='flex flex-nowrap overflow-x-scroll gap-x-4 ml-6'>
+            {renderedWantToWatch}
           </div>
         </section>
         <section className='mb-8'>
@@ -49,8 +52,8 @@ const Home = () => {
             <h1 className='text-slate-800 text-2xl font-bold'>All caught up</h1>
             <p className='text-purple-900 font-light'>See All</p>
           </div>
-          <div className='ml-6'>
-            <ShowCardSmall />
+          <div className='flex flex-nowrap overflow-x-scroll gap-x-4 ml-6'>
+            {renderedWantToWatch}
           </div>
         </section>
       </main>

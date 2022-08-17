@@ -1,10 +1,19 @@
-const ShowCardSmall = () => {
+import { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { SavedShowsContext } from '../savedShowsContext';
+
+const ShowCardSmall = props => {
+  const { setCurrentId } = useContext(SavedShowsContext);
+
   return (
-    <img
-      src='https://static.tvmaze.com/uploads/images/original_untouched/332/830232.jpg'
-      alt='Ted Lasso poster'
-      className='h-[190px] aspect-poster object-cover rounded-xl shadow-even mr-4'
-    />
+    <Link to={`/showdetails/${props.id}`}>
+      <img
+        src={props.image !== null && props.image.original}
+        alt={`${props.name} poster`}
+        className='h-[190px] min-w-[135px] object-cover aspect-poster rounded-xl shadow-even'
+        onClick={() => setCurrentId(props.id)}
+      />
+    </Link>
   );
 };
 
