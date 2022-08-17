@@ -10,7 +10,7 @@ const ShowCardLarge = props => {
       <img
         src={props.image !== null && props.image.original}
         alt={`${props.name} poster`}
-        className='h-[315px] aspect-poster object-cover rounded-xl shadow-even mr-4'
+        className='h-[315px] min-w-[225px] object-cover aspect-poster rounded-xl shadow-even'
         onClick={() => setCurrentId(props.id)}
       />
     </Link>

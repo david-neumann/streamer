@@ -28,8 +28,8 @@ const SavedShowsContextProvider = props => {
     localStorage.setItem('savedData', JSON.stringify(savedShows));
   }, [savedShows]);
 
-  // Save a new show from search results or show details
-  const saveNewShow = async id => {
+  // Get show details from API for show that hasn't been saved
+  const retrieveShowDetailsFromApi = async id => {
     const showPromise = getShowDetails(id);
     const episodePromise = getEpisodeDetails(id);
     const imagesPromise = getShowImages(id);
@@ -49,15 +49,28 @@ const SavedShowsContextProvider = props => {
       ...showDetails,
       episodes: newEpisodesArray,
       images,
-      tags: ['want to watch'],
+      tags: '',
     };
+
+    return newShowObj;
+  };
+
+  // Save a new show from search results or show details
+  const saveNewShow = async id => {
+    const newShowObj = retrieveShowDetailsFromApi(id);
 
     setSavedShows(prevSavedShows => [...prevSavedShows, newShowObj]);
   };
 
   return (
     <SavedShowsContext.Provider
-      value={{ currentId, setCurrentId, savedShows, saveNewShow }}
+      value={{
+        currentId,
+        setCurrentId,
+        savedShows,
+        saveNewShow,
+        retrieveShowDetailsFromApi,
+      }}
     >
       {props.children}
     </SavedShowsContext.Provider>

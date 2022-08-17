@@ -1,8 +1,7 @@
 const EpisodeCard = props => {
-  let htmlFreeSummary;
-  if (props.summary) {
-    htmlFreeSummary = props.summary.replace(/(<([^>]+)>)/gi, '');
-  }
+  const htmlFreeSummary = props.summary
+    ? props.summary.replace(/(<([^>]+)>)/gi, '')
+    : '';
 
   return (
     <div className='w-full my-4 border-purple-800 rounded-xl shadow-episode'>
@@ -31,11 +30,19 @@ const EpisodeCard = props => {
             {props.runtime} minutes
           </p>
         </div>
-        <img
-          src='/check.svg'
-          alt='add button'
-          className='w-10 p-2 mr-4 border-2 border-purple-800 rounded-full self-center hover:bg-purple-300'
-        />
+        {props.watched ? (
+          <img
+            src='/check-light.svg'
+            alt='check button'
+            className='w-10 p-2 mr-4 border-2 border-purple-800 rounded-full bg-purple-800 cursor-pointer'
+          />
+        ) : (
+          <img
+            src='/check.svg'
+            alt='add button'
+            className='w-10 p-2 mr-4 border-2 border-purple-800 rounded-full self-center hover:bg-purple-300 cursor-pointer'
+          />
+        )}
       </div>
       <p className='px-4 py-2 text-slate-800 font-light text-sm'>
         {htmlFreeSummary}

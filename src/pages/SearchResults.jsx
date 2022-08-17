@@ -8,6 +8,8 @@ const SearchResults = () => {
   const { searchResults, onSearchSubmit, clearResults } =
     useContext(SearchContext);
 
+  console.log(searchResults);
+
   const searchResultsElements = searchResults.map(result => (
     <SearchCard key={result.show.id} id={result.show.id} result={result} />
   ));

@@ -1,10 +1,14 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { SavedShowsContext } from '../savedShowsContext';
 import EpisodeCard from '../components/EpisodeCard';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const ShowDetail = () => {
-  const { currentId, savedShows } = useContext(SavedShowsContext);
+  const { currentId, savedShows, saveNewShow, retrieveShowDetailsFromApi } =
+    useContext(SavedShowsContext);
+
+  const isSavedShow = savedShows.some(show => currentId === show.id);
 
   const currentShowData = savedShows.filter(show => currentId === show.id);
   const { episodes, name, images, network, premiered, summary, webChannel } =
@@ -15,9 +19,6 @@ const ShowDetail = () => {
   const year = premiered ? premiered.slice(0, 4) : '';
   const service = network ? network.name : webChannel.name;
   const htmlFreeSummary = summary ? summary.replace(/(<([^>]+)>)/gi, '') : '';
-
-  console.log(currentShowData);
-  console.log(backgroundImg);
 
   const renderedEpisodes = episodes ? (
     episodes.map(episode => <EpisodeCard key={episode.id} {...episode} />)
@@ -50,31 +51,40 @@ const ShowDetail = () => {
                 {year} • {service}
               </p>
             </div>
-            <img
-              src='/plus.svg'
-              alt='add button'
-              className='w-10 p-2 mr-4 border-2 border-purple-800 rounded-full hover:bg-purple-300'
-            />
+            {isSavedShow ? (
+              <img
+                src='/check-light.svg'
+                alt='check button'
+                className='w-10 p-2 mr-4 border-2 border-purple-800 rounded-full bg-purple-800'
+              />
+            ) : (
+              <img
+                src='/plus.svg'
+                alt='add button'
+                className='w-10 p-2 mr-4 border-2 border-purple-800 rounded-full hover:bg-purple-300'
+                onClick={() => saveNewShow(id)}
+              />
+            )}
           </div>
           <div className='flex flex-nowrap overflow-x-scroll mt-2'>
-            <button className='border border-purple-800 mr-2 py-1 px-4 rounded-md text-xs whitespace-nowrap'>
+            <span className='border border-purple-800 mr-2 py-1 px-4 rounded-md text-xs whitespace-nowrap cursor-default'>
               favorite
-            </button>
-            <button className='border border-purple-800 mr-2 py-1 px-4 rounded-md text-xs whitespace-nowrap'>
+            </span>
+            <span className='border border-purple-800 mr-2 py-1 px-4 rounded-md text-xs whitespace-nowrap cursor-default'>
               couple watch
-            </button>
-            <button className='border border-purple-800 mr-2 py-1 px-4 rounded-md text-xs whitespace-nowrap'>
+            </span>
+            <span className='border border-purple-800 mr-2 py-1 px-4 rounded-md text-xs whitespace-nowrap cursor-default'>
               football
-            </button>
-            <button className='border border-purple-800 bg-purple-800 mr-2 py-1 px-4 rounded-md text-white text-xs whitespace-nowrap'>
+            </span>
+            <span className='border border-purple-800 bg-purple-800 mr-2 py-1 px-4 rounded-md text-white text-xs whitespace-nowrap cursor-pointer'>
               Manage Tags ➔
-            </button>
+            </span>
           </div>
         </div>
         <p className='mx-6 my-4 text-slate-800 font-light'>{htmlFreeSummary}</p>
       </header>
       <section className='mx-6'>
-        <h2 className='text-slate-800 font-bold text-2xl mt-6'>Next Episode</h2>
+        <h2 className='text-slate-800 font-bold text-2xl mt-6'>Episodes</h2>
         {episodes && renderedEpisodes}
       </section>
     </>

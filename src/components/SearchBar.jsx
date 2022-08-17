@@ -30,6 +30,7 @@ const SearchBar = ({ onSearchSubmit, clearResults }) => {
         onChange={e => setDebouncedTerm(e.target.value)}
         onFocus={e => e.target.select()}
         value={debouncedTerm}
+        autoFocus
       />
       <img
         src='/search.svg'
