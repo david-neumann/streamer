@@ -1,12 +1,10 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { SavedShowsContext } from '../savedShowsContext';
 import EpisodeCard from '../components/EpisodeCard';
 import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
 
 const ShowDetail = () => {
-  const { currentId, savedShows, saveNewShow, retrieveShowDetailsFromApi } =
-    useContext(SavedShowsContext);
+  const { currentId, savedShows, saveNewShow } = useContext(SavedShowsContext);
 
   const isSavedShow = savedShows.some(show => currentId === show.id);
 
@@ -21,7 +19,9 @@ const ShowDetail = () => {
   const htmlFreeSummary = summary ? summary.replace(/(<([^>]+)>)/gi, '') : '';
 
   const renderedEpisodes = episodes ? (
-    episodes.map(episode => <EpisodeCard key={episode.id} {...episode} />)
+    episodes.map(episode => (
+      <EpisodeCard key={episode.id} showId={currentId} {...episode} />
+    ))
   ) : (
     <div></div>
   );

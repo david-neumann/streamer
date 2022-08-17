@@ -28,7 +28,7 @@ const SavedShowsContextProvider = props => {
     localStorage.setItem('savedData', JSON.stringify(savedShows));
   }, [savedShows]);
 
-  // Get show details from API for show that hasn't been saved
+  // Get show details from API
   const retrieveShowDetailsFromApi = async id => {
     const showPromise = getShowDetails(id);
     const episodePromise = getEpisodeDetails(id);
@@ -67,6 +67,7 @@ const SavedShowsContextProvider = props => {
         currentId,
         setCurrentId,
         savedShows,
+        setSavedShows,
         saveNewShow,
         retrieveShowDetailsFromApi,
       }}

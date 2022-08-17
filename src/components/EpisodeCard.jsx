@@ -1,15 +1,45 @@
-const EpisodeCard = props => {
-  const htmlFreeSummary = props.summary
-    ? props.summary.replace(/(<([^>]+)>)/gi, '')
-    : '';
+import { useContext } from 'react';
+import { SavedShowsContext } from '../savedShowsContext';
+
+const EpisodeCard = ({
+  id,
+  showId,
+  image,
+  name,
+  number,
+  runtime,
+  season,
+  summary,
+  watched,
+}) => {
+  const { savedShows, setSavedShows } = useContext(SavedShowsContext);
+
+  const htmlFreeSummary = summary ? summary.replace(/(<([^>]+)>)/gi, '') : '';
+
+  const toggleEpisodeWatched = () => {
+    const updatedSavedShows = savedShows.map(show => {
+      if (showId === show.id) {
+        const newEpisodesArray = show.episodes.map(episode =>
+          id === episode.id
+            ? { ...episode, watched: !episode.watched }
+            : episode
+        );
+        return { ...show, episodes: newEpisodesArray };
+      } else {
+        return show;
+      }
+    });
+
+    setSavedShows(updatedSavedShows);
+  };
 
   return (
     <div className='w-full my-4 border-purple-800 rounded-xl shadow-episode'>
       <div className='flex justify-between h-24 border-b border-slate-100 border-opacity-100'>
-        {props.image !== null ? (
+        {image !== null ? (
           <img
-            src={props.image !== null ? props.image.original : ''}
-            alt={`${props.name} image`}
+            src={image !== null ? image.original : ''}
+            alt={`${name} image`}
             className='aspect-[4/3] object-cover rounded-tl-lg -z-10'
           />
         ) : (
@@ -20,27 +50,27 @@ const EpisodeCard = props => {
         )}
         <div className='flex flex-col justify-center mr-auto pl-2'>
           <h2 className='text-slate-800 font-bold text-2xl'>
-            {props.season < 10 ? `S0${props.season}` : `S${props.season}`} |{' '}
-            {props.number < 10 ? `E0${props.number}` : `E${props.number}`}
+            {season < 10 ? `S0${season}` : `S${season}`} |{' '}
+            {number < 10 ? `E0${number}` : `E${number}`}
           </h2>
           <p className='text-purple-800 text-lg font-semibold truncate max-w-[180px]'>
-            {props.name}
+            {name}
           </p>
-          <p className='text-slate-800 text-xs font-light'>
-            {props.runtime} minutes
-          </p>
+          <p className='text-slate-800 text-xs font-light'>{runtime} minutes</p>
         </div>
-        {props.watched ? (
+        {watched ? (
           <img
             src='/check-light.svg'
             alt='check button'
-            className='w-10 p-2 mr-4 border-2 border-purple-800 rounded-full bg-purple-800 cursor-pointer'
+            className='w-10 p-2 mr-4 border-2 border-purple-800 rounded-full self-center bg-purple-800 cursor-pointer'
+            onClick={toggleEpisodeWatched}
           />
         ) : (
           <img
             src='/check.svg'
             alt='add button'
             className='w-10 p-2 mr-4 border-2 border-purple-800 rounded-full self-center hover:bg-purple-300 cursor-pointer'
+            onClick={toggleEpisodeWatched}
           />
         )}
       </div>
