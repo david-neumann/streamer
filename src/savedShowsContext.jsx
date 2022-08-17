@@ -57,8 +57,7 @@ const SavedShowsContextProvider = props => {
 
   // Save a new show from search results or show details
   const saveNewShow = async id => {
-    const newShowObj = retrieveShowDetailsFromApi(id);
-
+    const newShowObj = await retrieveShowDetailsFromApi(id);
     setSavedShows(prevSavedShows => [...prevSavedShows, newShowObj]);
   };
 

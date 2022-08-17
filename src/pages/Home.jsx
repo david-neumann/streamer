@@ -22,6 +22,7 @@ const Home = () => {
         <SearchBar
           onSearchSubmit={onSearchSubmit}
           clearResults={clearResults}
+          autoFocus={false}
         />
       </Link>
       <main>

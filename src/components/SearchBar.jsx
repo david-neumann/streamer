@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const SearchBar = ({ onSearchSubmit, clearResults }) => {
+const SearchBar = ({ onSearchSubmit, clearResults, autoFocus }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [debouncedTerm, setDebouncedTerm] = useState(searchTerm);
 
@@ -30,7 +30,7 @@ const SearchBar = ({ onSearchSubmit, clearResults }) => {
         onChange={e => setDebouncedTerm(e.target.value)}
         onFocus={e => e.target.select()}
         value={debouncedTerm}
-        autoFocus
+        autoFocus={autoFocus}
       />
       <img
         src='/search.svg'

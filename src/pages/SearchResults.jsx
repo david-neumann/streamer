@@ -8,15 +8,17 @@ const SearchResults = () => {
   const { searchResults, onSearchSubmit, clearResults } =
     useContext(SearchContext);
 
-  console.log(searchResults);
-
   const searchResultsElements = searchResults.map(result => (
     <SearchCard key={result.show.id} id={result.show.id} result={result} />
   ));
 
   return (
     <>
-      <SearchBar onSearchSubmit={onSearchSubmit} clearResults={clearResults} />
+      <SearchBar
+        onSearchSubmit={onSearchSubmit}
+        clearResults={clearResults}
+        autoFocus={true}
+      />
       {searchResultsElements.length > 0 ? (
         <main className='m-6'>{searchResultsElements}</main>
       ) : (
