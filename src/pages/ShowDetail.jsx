@@ -74,7 +74,7 @@ const ShowDetail = () => {
               couple watch
             </span>
             <span className='border border-purple-800 mr-2 py-1 px-4 rounded-md text-xs whitespace-nowrap cursor-default'>
-              football
+              Sunday
             </span>
             <span className='border border-purple-800 bg-purple-800 mr-2 py-1 px-4 rounded-md text-white text-xs whitespace-nowrap cursor-pointer'>
               Manage Tags ➔

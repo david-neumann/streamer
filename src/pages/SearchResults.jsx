@@ -14,11 +14,20 @@ const SearchResults = () => {
 
   return (
     <>
-      <SearchBar
-        onSearchSubmit={onSearchSubmit}
-        clearResults={clearResults}
-        autoFocus={true}
-      />
+      <div className='flex items-center'>
+        <Link to='/'>
+          <img
+            src='/caret-left-purple.svg'
+            alt='back arrow'
+            className='h-12 pl-[4px] mt-3'
+          />
+        </Link>
+        <SearchBar
+          onSearchSubmit={onSearchSubmit}
+          clearResults={clearResults}
+          autoFocus={true}
+        />
+      </div>
       {searchResultsElements.length > 0 ? (
         <main className='m-6'>{searchResultsElements}</main>
       ) : (

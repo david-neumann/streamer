@@ -18,7 +18,7 @@ const SearchBar = ({ onSearchSubmit, clearResults, autoFocus }) => {
   }, [searchTerm]);
 
   return (
-    <header className='mx-6 mt-12 mb-8 h-12 relative'>
+    <header className='mx-6 mt-12 mb-8 h-12 relative grow'>
       <input
         type='text'
         placeholder='Search for TV Shows'
