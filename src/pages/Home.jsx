@@ -21,11 +21,11 @@ const Home = () => {
     <>
       <header className='flex items-center'>
         <h1
-          className='hidden font-black text-5xl text-purple-800 
+          className='hidden font-black text-5xl text-purple-600 
           mt-6 mr-16 -ml-6 uppercase order-last 
           drop-shadow-[2px_2px_0_rgba(30,41,59,1)]
           md:block md:transition-all md:duration-300 
-          xl:text-6xl xl:transition-all xl:duration-300'
+          xl:text-6xl xl:transition-all xl:duration-300 xl:mr-20'
         >
           Streamer
         </h1>
