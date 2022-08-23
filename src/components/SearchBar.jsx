@@ -18,7 +18,7 @@ const SearchBar = ({ onSearchSubmit, clearResults, autoFocus }) => {
   }, [searchTerm]);
 
   return (
-    <div className='mx-6 mt-12 mb-8 h-12 relative grow sm:mx-12 md:mx-16 md:mt-16 xl:mx-20 transition-all sm:transition-all md:transition-all xl:transition-all'>
+    <div className='mx-6 mt-12 mb-8 h-12 relative grow sm:mx-12 md:mx-16 md:mt-16 xl:mx-20 transition-all'>
       <input
         type='text'
         placeholder='Search for TV Shows'

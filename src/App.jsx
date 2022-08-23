@@ -4,6 +4,7 @@ import SearchResults from './pages/SearchResults';
 import { SavedShowsContextProvider } from './savedShowsContext';
 import { Route, Routes } from 'react-router-dom';
 import { SearchContextProvider } from './searchContext';
+import Footer from './components/Footer';
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
           </Routes>
         </SearchContextProvider>
       </SavedShowsContextProvider>
+      <Footer />
     </div>
   );
 };
