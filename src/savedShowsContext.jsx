@@ -61,6 +61,12 @@ const SavedShowsContextProvider = props => {
     setSavedShows(prevSavedShows => [...prevSavedShows, newShowObj]);
   };
 
+  // Remove a saved show
+  const removeSavedShow = id => {
+    const newSavedShowsArr = savedShows.filter(show => id !== show.id);
+    setSavedShows(newSavedShowsArr);
+  };
+
   return (
     <SavedShowsContext.Provider
       value={{
@@ -69,6 +75,7 @@ const SavedShowsContextProvider = props => {
         savedShows,
         setSavedShows,
         saveNewShow,
+        removeSavedShow,
         retrieveShowDetailsFromApi,
       }}
     >

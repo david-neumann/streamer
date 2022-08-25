@@ -7,7 +7,7 @@ const SearchCard = ({ id, result }) => {
 
   const htmlFreeSummary = summary ? summary.replace(/(<([^>]+)>)/gi, '') : '';
 
-  const { setCurrentId, savedShows, saveNewShow } =
+  const { setCurrentId, savedShows, saveNewShow, removeSavedShow } =
     useContext(SavedShowsContext);
 
   const isSavedShow = savedShows.some(show => id === show.id);
@@ -48,8 +48,8 @@ const SearchCard = ({ id, result }) => {
             <img
               src='/check-light.svg'
               alt='add button'
-              className='w-10 p-2 mr-4 border-2 border-purple-800 rounded-full self-center bg-purple-800'
-              // onClick={() => saveNewShow(id)}
+              className='w-10 p-2 mr-4 border-2 border-purple-800 rounded-full self-center bg-purple-800 transition-all lg:mr-6'
+              onClick={() => removeSavedShow(id)}
             />
           ) : (
             <img

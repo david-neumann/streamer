@@ -4,7 +4,8 @@ import EpisodeCard from '../components/EpisodeCard';
 import { Link } from 'react-router-dom';
 
 const ShowDetail = () => {
-  const { currentId, savedShows, saveNewShow } = useContext(SavedShowsContext);
+  const { currentId, savedShows, saveNewShow, removeSavedShow } =
+    useContext(SavedShowsContext);
 
   const isSavedShow = savedShows.some(show => currentId === show.id);
 
@@ -17,6 +18,8 @@ const ShowDetail = () => {
   const year = premiered ? premiered.slice(0, 4) : '';
   const service = network ? network.name : webChannel.name;
   const htmlFreeSummary = summary ? summary.replace(/(<([^>]+)>)/gi, '') : '';
+
+  console.log(savedShows);
 
   const renderedEpisodes = episodes ? (
     episodes.map(episode => (
@@ -58,13 +61,14 @@ const ShowDetail = () => {
                 src='/check-light.svg'
                 alt='check button'
                 className='w-10 p-2 mr-4 border-2 border-purple-800 rounded-full bg-purple-800'
+                onClick={() => removeSavedShow(currentId)}
               />
             ) : (
               <img
                 src='/plus.svg'
                 alt='add button'
                 className='w-10 p-2 mr-4 border-2 border-purple-800 rounded-full hover:bg-purple-300'
-                onClick={() => saveNewShow(id)}
+                onClick={() => saveNewShow(currentId)}
               />
             )}
           </div>
